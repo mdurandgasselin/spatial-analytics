@@ -29,4 +29,5 @@ ENV PATH=/usr/lib/jvm/java-11-openjdk-amd64:/opt/apache-maven-3.9.9/bin:/opt/hiv
 # Run the Maven install
 RUN mvn install
 
+COPY setup.hql /opt/hive/
 # USER hive
