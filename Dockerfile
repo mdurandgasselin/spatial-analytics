@@ -30,4 +30,9 @@ ENV PATH=/usr/lib/jvm/java-11-openjdk-amd64:/opt/apache-maven-3.9.9/bin:/opt/hiv
 RUN mvn install
 
 COPY setup.hql /opt/hive/
+
+# Put back the JAVA_HOME to point to previous version of java (version 8)
+ENV JAVA_HOME=/usr/local/openjdk-8
+ENV PATH=/usr/local/openjdk-8:/opt/apache-maven-3.9.9/bin:/opt/hive/bin:/opt/hadoop/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin/
+
 # USER hive
