@@ -28,7 +28,10 @@ ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ENV PATH=/usr/lib/jvm/java-11-openjdk-amd64:/opt/apache-maven-3.9.9/bin:/opt/hive/bin:/opt/hadoop/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin/
 # Run the Maven install
 RUN mvn install
-
+# Copy output jar file to the hive/lib so it can be accesed in the beeline cli
+RUN cp hive/target/spatial-sdk-hive-2.2.1-SNAPSHOT*.jar $HIVE_HOME/lib/
+RUN cp json/target/spatial-sdk-json-2.2.1-SNAPSHOT*.jar $HIVE_HOME/lib/
+# Add and example script to show case the setup
 COPY setup.hql /opt/hive/
 
 # Put back the JAVA_HOME to point to previous version of java (version 8)
