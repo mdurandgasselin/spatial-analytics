@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+
+  notebook:
+    build: zeppelin-docker
+    ports:
+      - 8080:8080
+    volumes:
+      - ./zeppelin-docker/logs:/logs
+      - ./zeppelin-docker/notebook:/notebook
+    environment:
+      - ZEPPELIN_LOG_DIR=/logs
+      - ZEPPELIN_NOTEBOOK_DIR=/notebook
+      - HIVE_ADDRESS=hivedb
+  
+  hivedb:
+    build: hive-docker
+    ports:
+      - 10000:10000
+      - 10002:10002
+    volumes:
+      - ./hive-docker/shared_data:/opt/data
+    environment:
+      - SERVICE_NAME=hiveserver2
+      
+
+
+  
+
