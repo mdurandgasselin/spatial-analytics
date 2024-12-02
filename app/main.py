@@ -31,7 +31,8 @@ try:
     cursor = connection.cursor()
     
     # Example query
-    cursor.execute("SHOW databases")
+    number = 1
+    cursor.execute(f"""LOAD DATA LOCAL INPATH '/opt/data/norvegian_20_min/message_{number}.csv' OVERWRITE INTO TABLE message{number}""")
     results = cursor.fetchall()
     print(results)
     

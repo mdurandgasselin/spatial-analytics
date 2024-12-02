@@ -13,7 +13,7 @@ services:
       - ZEPPELIN_LOG_DIR=/logs
       - ZEPPELIN_NOTEBOOK_DIR=/notebook
   
-  hivedb:
+  hivedb:  # Do not change this name, it is used in the address with the Zeppelin connector interpreter.
     build: hivedb
     ports:
       - 10000:10000

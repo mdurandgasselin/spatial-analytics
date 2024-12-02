@@ -37,3 +37,5 @@ COPY setup.hql /opt/hive/
 #ENV PATH=/usr/local/openjdk-8:/opt/apache-maven-3.9.9/bin:/opt/hive/bin:/opt/hadoop/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin/
 
 WORKDIR /opt/hive
+EXPOSE 10000
+EXPOSE 10002
