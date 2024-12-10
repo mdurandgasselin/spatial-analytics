@@ -7,6 +7,10 @@ To start the whole application:
 ```
 docker-compose up -d
 ```
+Tos rebuild the images:
+```
+docker-compose up --build -d
+```
 Connect to hive in interactive mode with beeline
 ```
  docker exec -it hive4 beeline -u 'jdbc:hive2://localhost:10000/'
@@ -51,3 +55,5 @@ Connect to hive in interactive mode with beeline
  docker exec -it hive4 beeline -u 'jdbc:hive2://localhost:10000/'
 ```
 In the app folder there are .py files and iPython notebooks that are configured to connect to the Hive server/container.
+
+To use the 

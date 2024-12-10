@@ -4,6 +4,7 @@ add jar
   /opt/hive/gis-tools-for-hadoop/samples/lib/spatial-sdk-json-2.0.0.jar;
 
 create temporary function ST_Point as 'com.esri.hadoop.hive.ST_Point';
+create temporary function ST_Polygon as 'com.esri.hadoop.hive.ST_Polygon';
 create temporary function ST_Contains as 'com.esri.hadoop.hive.ST_Contains';
 
 drop table earthquakes;
@@ -22,11 +23,11 @@ OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat';
 LOAD DATA INPATH '/opt/hive/gis-tools-for-hadoop/samples/data/earthquake-data/earthquakes.csv' OVERWRITE INTO TABLE earthquakes;
 LOAD DATA INPATH '/opt/hive/gis-tools-for-hadoop/samples/data/counties-data/california-counties.json' OVERWRITE INTO TABLE counties;
 
-SELECT counties.name, count(*) cnt FROM counties
-JOIN earthquakes
-WHERE ST_Contains(counties.boundaryshape, ST_Point(earthquakes.longitude, earthquakes.latitude))
-GROUP BY counties.name
-ORDER BY cnt desc;
+-- SELECT counties.name, count(*) cnt FROM counties
+-- JOIN earthquakes
+-- WHERE ST_Contains(counties.boundaryshape, ST_Point(earthquakes.longitude, earthquakes.latitude))
+-- GROUP BY counties.name
+-- ORDER BY cnt desc;
 
 CREATE TABLE message1 (
     msg_type int COMMENT "Type for message range from 1 to 27. Here alway 1.",
@@ -94,7 +95,7 @@ CREATE TABLE message5 (
     draught float COMMENT "in 1/10 m, 255 = draught 25.5 m or greater, 0 = not available = default; in accordance with IMO Resolution A.851", 
     destination string COMMENT "Maximum 20 characters using 6-bit ASCII; @@@@@@@@@@@@@@@@@@@@ = not available", 
     dte int COMMENT "Data terminal ready (0 = available, 1 = not available = default)", 
-    spare_1 string COMMENT "Not used. Should be set to zero. Reserved for future use.", 
+    spare_1 string COMMENT "Not used. Should be set to zero. Reserved for future use."
     )
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS TEXTFILE;
@@ -136,9 +137,9 @@ CREATE TABLE message19 (
     lon float, 
     lat float,
     course float,
+    heading int,
     second int, 
-    reserved_2 int,
-    callsign string, 
+    reserved_2 int, 
     shipname string, 
     ship_type int, 
     to_bow int, 
@@ -146,12 +147,16 @@ CREATE TABLE message19 (
     to_port int, 
     to_starboard int, 
     epfd  int, 
+    raim int,
     dte int, 
     assigned int,
     spare_1 string
     )
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS TEXTFILE;
+
+CREATE TABLE message19_test_geo_2 LIKE message19;
+LOAD DATA LOCAL INPATH '/opt/data/test/message_19_test_geo_2.csv' INTO TABLE message19_test_geo_2;
 
 
 CREATE TABLE message21 (
@@ -214,3 +219,12 @@ CREATE TABLE message8 (
     )
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS TEXTFILE;
+
+LOAD DATA LOCAL INPATH '/opt/data/norvegian_20_min/message_1.csv' INTO TABLE message1;
+LOAD DATA LOCAL INPATH '/opt/data/norvegian_20_min/message_3.csv' INTO TABLE message3;
+LOAD DATA LOCAL INPATH '/opt/data/norvegian_20_min/message_5.csv' INTO TABLE message5;
+LOAD DATA LOCAL INPATH '/opt/data/norvegian_20_min/message_8.csv' INTO TABLE message8;
+LOAD DATA LOCAL INPATH '/opt/data/norvegian_20_min/message_18.csv' INTO TABLE message18;
+LOAD DATA LOCAL INPATH '/opt/data/norvegian_20_min/message_19.csv' INTO TABLE message19;
+LOAD DATA LOCAL INPATH '/opt/data/norvegian_20_min/message_21.csv' INTO TABLE message21;
+LOAD DATA LOCAL INPATH '/opt/data/norvegian_20_min/message_24.csv' INTO TABLE message24;

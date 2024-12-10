@@ -7,8 +7,8 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./zeppelin-docker/logs:/logs
-      - ./zeppelin-docker/notebook:/notebook
+      - ./zeppelin/logs:/logs
+      - ./zeppelin/notebook:/notebook
     environment:
       - ZEPPELIN_LOG_DIR=/logs
       - ZEPPELIN_NOTEBOOK_DIR=/notebook
@@ -19,7 +19,7 @@ services:
       - 10000:10000
       - 10002:10002
     volumes:
-      - ./hive-docker/shared_data:/opt/data
+      - ./hivedb/shared_data:/opt/data
     environment:
       - SERVICE_NAME=hiveserver2
       
